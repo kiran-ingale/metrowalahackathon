@@ -1,0 +1,6 @@
+{
+  "slug": "maximum_subarray",
+  "counterexample_args": [[-3, -1, -2]],
+  "wrong_code": "class Solution:\n    def maxSubArray(self, nums):\n        best = running = 0\n        for value in nums:\n            running = max(0, running + value)\n            best = max(best, running)\n        return best\n",
+  "correct_code": "class Solution:\n    def maxSubArray(self, nums):\n        best = running = nums[0]\n        for value in nums[1:]:\n            running = max(value, running + value)\n            best = max(best, running)\n        return best\n"
+}

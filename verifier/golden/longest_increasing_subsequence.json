@@ -1,0 +1,6 @@
+{
+  "slug": "longest_increasing_subsequence",
+  "counterexample_args": [[2, 2, 3]],
+  "wrong_code": "from bisect import bisect_right\n\nclass Solution:\n    def lengthOfLIS(self, nums):\n        tails = []\n        for value in nums:\n            index = bisect_right(tails, value)\n            if index == len(tails):\n                tails.append(value)\n            else:\n                tails[index] = value\n        return len(tails)\n",
+  "correct_code": "from bisect import bisect_left\n\nclass Solution:\n    def lengthOfLIS(self, nums):\n        tails = []\n        for value in nums:\n            index = bisect_left(tails, value)\n            if index == len(tails):\n                tails.append(value)\n            else:\n                tails[index] = value\n        return len(tails)\n"
+}
