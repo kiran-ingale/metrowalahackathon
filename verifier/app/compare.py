@@ -7,8 +7,14 @@ from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
 
-_MISSING = object()
 _OUTCOME_KEYS = ("err", "timeout", "skipped", "output_too_large")
+
+
+def _numeric_close(left: int | float, right: int | float) -> bool:
+    try:
+        return math.isclose(float(left), float(right), rel_tol=1e-9, abs_tol=1e-9)
+    except OverflowError:
+        return left == right
 
 
 def _same_value(left: Any, right: Any) -> bool:
@@ -16,7 +22,7 @@ def _same_value(left: Any, right: Any) -> bool:
         if isinstance(left, (int, float)) and not isinstance(left, bool) and isinstance(
             right, (int, float)
         ) and not isinstance(right, bool):
-            return math.isclose(float(left), float(right), rel_tol=1e-9, abs_tol=1e-9)
+            return _numeric_close(left, right)
         return False
     if isinstance(left, float):
         return math.isclose(left, right, rel_tol=1e-9, abs_tol=1e-9)
@@ -64,7 +70,7 @@ def compare(
             return {
                 "index": index,
                 "kind": "extra_result",
-                "expected": _MISSING,
+                "expected": None,
                 "got": candidate_results[index],
             }
         if index >= len(candidate_results):
@@ -72,7 +78,7 @@ def compare(
                 "index": index,
                 "kind": "missing_result",
                 "expected": oracle_results[index],
-                "got": _MISSING,
+                "got": None,
             }
 
         oracle_kind, expected = _unpack(oracle_results[index])

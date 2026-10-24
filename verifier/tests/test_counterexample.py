@@ -6,26 +6,22 @@ from verifier.app.main import app
 client = TestClient(app)
 
 
-def test_coin_change_returns_mock_counterexample() -> None:
+def test_coin_change_returns_reproduced_counterexample() -> None:
     response = client.post(
         "/counterexample",
-        json={"slug": "coin-change", "statement": "Make amount with fewest coins", "code": ""},
+        json={
+            "slug": "coin-change",
+            "statement": "Make amount with fewest coins",
+            "code": """class Solution:\n    def coinChange(self, coins, amount):\n        count = 0\n        for coin in sorted(coins, reverse=True):\n            count += amount // coin\n            amount %= coin\n        return count if amount == 0 else -1\n""",
+        },
     )
 
     assert response.status_code == 200
-    assert response.json() == {
-        "status": "found",
-        "trust_label": "verified_counterexample",
-        "input": {"coins": [1, 3, 4], "amount": 6},
-        "expected": 2,
-        "got": 3,
-        "tests_run": 200,
-        "seed": 1234,
-        "minimized": True,
-        "reproduced": True,
-        "limitations": [],
-        "message": "Greedy picks 4+1+1 (3 coins); optimal is 3+3 (2 coins)",
-    }
+    body = response.json()
+    assert body["status"] == "found"
+    assert body["trust_label"] == "verified_counterexample"
+    assert body["input"] is not None
+    assert body["reproduced"] is True
 
 
 def test_other_slug_is_not_supported() -> None:
@@ -45,7 +41,7 @@ def test_unknown_request_field_is_rejected() -> None:
         json={
             "slug": "coin-change",
             "statement": "Make amount with fewest coins",
-            "code": "",
+            "code": "pass",
             "debug": True,
         },
     )

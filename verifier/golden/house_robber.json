@@ -1,6 +1,6 @@
 {
   "slug": "house_robber",
-  "counterexample_args": [[1]],
-  "wrong_code": "class Solution:\n    def rob(self, nums):\n        # The usual recurrence, but it assumes at least two houses.\n        best = [0] * len(nums)\n        best[0] = nums[0]\n        best[1] = max(nums[0], nums[1])\n        for i in range(2, len(nums)):\n            best[i] = max(best[i - 1], nums[i] + best[i - 2])\n        return best[-1]\n",
+  "counterexample_args": [[2, 1, 1, 2]],
+  "wrong_code": "class Solution:\n    def rob(self, nums):\n        # It compares the two fixed alternating patterns instead of choosing freely.\n        return max(sum(nums[::2]), sum(nums[1::2]))\n",
   "correct_code": "class Solution:\n    def rob(self, nums):\n        two_back = 0\n        one_back = 0\n        for value in nums:\n            two_back, one_back = one_back, max(one_back, two_back + value)\n        return one_back\n"
 }

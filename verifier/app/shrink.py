@@ -17,18 +17,15 @@ def _chunk_removals(value: list[Any] | str) -> Iterator[list[Any] | str]:
     for chunk_size in chunk_sizes:
         for start in range(0, length, chunk_size):
             end = min(length, start + chunk_size)
-            if isinstance(value, str):
-                yield value[:start] + value[end:]
-            else:
-                yield value[:start] + value[end:]
+            yield value[:start] + value[end:]
 
 
 def _integer_candidates(value: int) -> Iterator[int]:
-    """Yield common simpler integer representatives, without duplicates."""
+    """Yield strictly smaller integer representatives, without duplicates."""
     half = (abs(value) // 2) * (-1 if value < 0 else 1)
     yielded: set[int] = set()
     for candidate in (0, half, -1, 1):
-        if candidate != value and candidate not in yielded:
+        if candidate != value and abs(candidate) < abs(value) and candidate not in yielded:
             yielded.add(candidate)
             yield candidate
 
@@ -86,6 +83,9 @@ def shrink(
         steps += 1
         probe = copy.deepcopy(candidate)
         if not valid(probe):
+            return False
+        if time.monotonic() >= deadline:
+            stopped = True
             return False
         return bool(fails(copy.deepcopy(candidate)))
 
