@@ -1,5 +1,23 @@
+# Internal planning artifacts
+IMPLEMENTATION_PLAN.md
+*_IMPLEMENTATION_PLAN.md
+backend/implementation-modules/
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# Python environments and generated files
+.venv/
+venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
-.venv/
-venv/
+.ruff_cache/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

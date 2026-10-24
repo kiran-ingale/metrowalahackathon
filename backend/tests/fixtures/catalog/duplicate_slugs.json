@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "duplicate",
+    "title": "Duplicate One",
+    "difficulty": "Easy",
+    "patterns": ["array"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "duplicate",
+    "title": "Duplicate Two",
+    "difficulty": "Easy",
+    "patterns": ["array"],
+    "counterexample_support": "not_supported"
+  }
+]

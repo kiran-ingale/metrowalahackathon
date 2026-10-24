@@ -1,0 +1,10 @@
+[
+  {
+    "slug": "dependent-problem",
+    "title": "Dependent Problem",
+    "difficulty": "Easy",
+    "patterns": ["array"],
+    "prerequisites": ["missing-problem"],
+    "counterexample_support": "not_supported"
+  }
+]
