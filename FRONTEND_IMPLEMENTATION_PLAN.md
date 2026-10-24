@@ -1,223 +1,96 @@
-# Unstuck Frontend Implementation Plan
+# Unstuck Frontend: Two-Hour Hackathon Plan
 
-This plan covers the Chrome extension that presents Unstuck inside the learner's workflow. It prioritizes a reliable manual paste-in experience, then adds optional LeetCode context extraction.
+This is a demo-first plan for the next two hours. Build one polished, useful learner flow: enter a coding problem, ask for a gentle hint, and see a clear response. Keep the interface cute and cozy through color, warmth, and small details; keep the implementation small enough to finish.
 
-## 1. Frontend Scope
+## The two-hour finish line
 
-### MVP responsibilities
+At the end of 120 minutes, a user can open Unstuck, enter a problem and their current thinking, choose **Get a hint**, and see a readable response. The page works even if the backend is unavailable by showing a clearly labeled demo response. It looks good at laptop and narrow side-panel widths.
 
-- Collect problem context, code, approach text, and verdict/error details.
-- Present explicit actions: **Hint**, **Check my approach**, **Explain error**, and **Break my code**.
-- Render guidance without unsolicited complete code.
-- Persist hints, journal entries, and settings locally.
-- Make verification status and limitations understandable.
+## Scope for this sprint
 
-### Exclusions
+### Build now
 
-- Auto-submitting or editing LeetCode code.
-- Direct use of an LLM key in the extension.
-- Mandatory profile scraping or account-history collection.
-- Cloud synchronization of journal data.
+- One responsive screen with a welcoming header, problem form, action button, and answer card.
+- Inputs for problem title, problem statement, and optional approach/code. Keep the first view short; put optional details behind a disclosure if needed.
+- One working action: **Get a hint**. If the API already supports another action reliably, add **Check my approach** as the only second action.
+- Loading, success, empty-input, and backend-error states.
+- A small, clearly labeled local demo response when no backend is configured, so the experience can be shown live.
+- Temporary in-memory state only. Refresh persistence, extension packaging, and storage can wait.
 
-## 2. Technical Foundation
+### Defer until after the demo
 
-| Area | Choice | Reason |
-| --- | --- | --- |
-| Platform | Chrome Extension Manifest V3 | Side panel support and modern extension lifecycle |
-| Language | TypeScript | Reliable contracts with the backend and adapter |
-| UI | React + Tailwind CSS | Fast, reusable side-panel components |
-| Build | Vite + CRXJS | Extension-focused local development and builds |
-| Ephemeral state | Zustand | Compact request and UI state |
-| Persistent state | Dexie over IndexedDB | Local-first journals, hint history, and settings |
-| Tests | Vitest + Testing Library | Fast component, state, and API-client tests |
+- Chrome extension packaging, service worker, content scripts, and LeetCode extraction.
+- Zustand, Dexie, IndexedDB, a database schema, and settings screens.
+- Hint-history persistence, journal, recommendations, and local-data deletion.
+- Counterexample execution, multiple guidance modes, authentication, and broad test infrastructure.
+- Custom editor integration. A normal textarea is enough for the demo.
 
-Suggested structure:
+Use the project’s existing frontend stack if one exists. If starting from scratch, use the smallest working setup already available; avoid adding libraries unless a required feature cannot be built without them.
 
-```text
-extension/
-├── src/
-│   ├── background/
-│   │   └── service-worker.ts
-│   ├── content/
-│   │   └── leetcode-content.ts
-│   ├── sidepanel/
-│   │   ├── App.tsx
-│   │   ├── components/
-│   │   ├── features/
-│   │   └── styles/
-│   ├── adapters/
-│   │   └── leetcode-adapter.ts
-│   └── shared/
-│       ├── api-client.ts
-│       ├── contracts.ts
-│       ├── db.ts
-│       ├── stores.ts
-│       └── validation.ts
-├── tests/
-├── manifest.config.ts
-└── package.json
-```
+## Cozy visual direction
 
-## 3. Shared Contracts
+- Warm paper background (`#FAF6EF`), cream cards (`#FFFDF8`), dark cocoa text (`#3F332E`), muted sage accents (`#728B72`), and a restrained peach highlight (`#E9A98D`).
+- Rounded cards and controls (12–18px), soft borders, generous spacing, and subtle shadows. Keep contrast strong and body text easy to read.
+- Friendly, calm microcopy: “Let’s untangle this together” and “Start with a small nudge.” Avoid childish decorations or excessive emoji.
+- Use one readable sans-serif font already available in the project. Add a small friendly icon or simple inline illustration only if it takes a few minutes; do not let decoration delay the core flow.
+- On narrow layouts, stack everything in one column, keep the primary action visible, and avoid horizontal scrolling.
 
-Build frontend types from a single backend-compatible schema. At minimum, model `ProblemContext`, `HintResponse`, `ApproachFeedback`, `CounterexampleResponse`, and `JournalEntry`.
+## Modules and approval checkpoints
 
-`ProblemContext` should contain:
+Work through these modules in order. Each has a design approval before implementation and a separate approval before its test/debug pass. At the checkpoint, show the concrete screen or changes and summarize what will be tested. If approval is not given, pause that phase and do not move on to later modules. Keep each design discussion brief so the build can still fit the two-hour window.
 
-- Problem title, optional slug, statement, examples, and constraints.
-- Selected language and optionally pasted code.
-- Optional plain-language approach.
-- Optional verdict and raw error message.
+| Module | Time | Deliverable | Design approval checkpoint | Test/debug approval checkpoint |
+| --- | --- | --- | --- | --- |
+| 0. Project check | 0–10 min | App run command, entry point, and actual backend route/contract identified. | Confirm the existing app and the smallest viable demo route. | After approval, start the app and resolve startup or integration blockers. |
+| 1. Cozy visual shell | 10–30 min | Header, page background, card, type, colors, and responsive frame. | Show the proposed visual direction and get approval before implementing it. | After approval, inspect desktop and narrow layouts; fix visual issues. |
+| 2. Problem form | 30–55 min | Editable title and statement, optional approach/code, and empty-input feedback. | Show the form layout and field labels for approval before building. | After approval, try empty, partial, and complete inputs; fix usability issues. |
+| 3. Hint request | 55–85 min | One hint action connected to the real backend contract, with readable response. | Show the action and answer-card design for approval before wiring it up. | After approval, exercise a successful request and inspect request/error handling; debug failures. |
+| 4. States and fallback | 85–100 min | Loading, retry, backend error, and clearly labeled demo response. | Show the state treatments and demo labeling for approval before implementation. | After approval, trigger each state and fix confusing or broken behavior. |
+| 5. Final polish and demo | 100–120 min | Responsive polish and one complete demo path. | Show the final polish changes before applying any additional design adjustments. | After approval, walk through the full flow, fix only issues on that path, and prepare demo context. |
 
-Use a discriminated API-result type for every backend action:
+### Approval protocol
 
-```ts
-type ApiResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; code: string; message: string; retryable: boolean };
-```
+At each design checkpoint, present a concise proposal or screenshot/mockup and ask whether to proceed. After implementing the module, report what changed and ask permission to test and debug it. Once that approval arrives, run the relevant checks, fix issues in that module, and report the result before requesting approval for the next module’s design. Keep implementation and test/debug permissions separate as requested.
 
-Do not render raw server or model content until it passes local runtime validation.
+If the clock is tight, preserve Modules 0–3 and simplify visual polish or optional fields. Do not skip an approval gate; reduce the module scope instead.
 
-## 4. Milestone M0: Extension Shell
+### Current sprint notes
 
-1. Scaffold Vite, CRXJS, React, TypeScript, Tailwind, Zustand, Dexie, Vitest, and Testing Library.
-2. Register the Manifest V3 service worker, content script, and side panel.
-3. Build a minimal side panel with service health and backend connection indicators.
-4. Add a typed API client with timeout, JSON parsing, and recoverable error states.
-5. Create a Dexie database with `settings`, `attempts`, `hintsSeen`, and `journal` tables.
-6. Configure local development against a backend URL in an extension-specific environment variable.
+- The workspace has no frontend scaffold, Node/npm runtime, backend implementation, or concrete API request schema. The current demo is therefore dependency-free HTML, CSS, and JavaScript that can be opened directly as `index.html`.
+- Modules 3 and 4 are combined for this workspace: the hint flow has loading, retry, and an explicit generic demo response. Real backend integration and its network error state are deferred until an endpoint contract exists.
+- The demo response is generic and is not based on the problem statement. Keep that limitation visible in the interface.
+- Structural and interaction checks can run here, but browser rendering inspection is unavailable because no browser is exposed to the UI tool.
+- Modules 1–5 are implemented. Final form/demo interaction checks, HTML structure checks, responsive-rule checks, contrast checks, and `git diff --check` passed. Browser screenshot review remains unverified.
 
-**Exit criteria:** Loading the unpacked extension opens the panel, confirms backend health, and shows a helpful unavailable-backend state.
+## Suggested single-screen layout
 
-## 5. Milestone M1: Context and Hint Ladder
+1. **Header:** Unstuck wordmark, a small “your coding companion” subtitle, and a warm greeting.
+2. **Problem card:** Title and problem statement fields; optional “Add my approach or code” disclosure.
+3. **Primary action:** “Get a hint” with one short reassurance that hints reveal gradually.
+4. **Response card:** Loading indicator, then the hint with a small “Want another nudge?” follow-up only if the API supports another level. Never imply the response is verified if it is generated guidance.
+5. **Footer note:** “Your work stays in this session” only if true; otherwise state the actual storage behavior.
 
-### Context form
+## API and demo behavior
 
-Build a paste-in form with:
+- Inspect the backend implementation before wiring requests; use its real route, request fields, and response fields. Do not build a speculative generic client.
+- Keep API URL configuration in the project’s existing environment setup. Never put a provider secret in frontend code.
+- Set a short request timeout and show a human-readable error with a retry button.
+- If the backend is not ready, provide a deterministic sample response behind an obvious “Demo response” label. Do not silently present canned text as a live model result.
+- Keep user context in memory for this sprint. Do not claim data is saved or private beyond what the implementation guarantees.
 
-- Problem title and full statement.
-- Examples and constraints.
-- Language selector.
-- Code editor or multiline code field.
-- Plain-language approach field.
-- Verdict selector and error message field.
+## Build order and cut line
 
-Keep every field editable, including later auto-detected values. A user must be able to correct incomplete page extraction.
+Work in this order: app runs → polished static screen → editable problem form → one real hint request → clear loading/error/demo states → responsive polish. At minute 90, stop adding features and use the remaining time to make the main path presentable and reliable. If time runs short, omit the second action and optional approach/code fields before cutting the working hint flow.
 
-### Hint ladder
+## Demo acceptance checklist
 
-1. Display four levels: Nudge, Direction, Strategy, and Walkthrough.
-2. Request only the level the user selects.
-3. Persist each revealed level against the current attempt.
-4. Show a concise warning before Level 4 that it may include pseudocode or a trace.
-5. Do not automatically request or show the next level.
-6. Add a separate explicit action for complete code only if this is approved as a product feature later.
+- The app starts with the documented command and opens without a blank screen.
+- A user can enter a title and statement, request a hint, and read the result.
+- Empty input, loading, backend failure, and demo fallback are understandable.
+- The cozy palette and spacing feel consistent, with readable contrast and keyboard focus.
+- The layout fits a narrow panel without horizontal scrolling.
+- The demo clearly distinguishes a live backend result from a canned fallback.
 
-**Exit criteria:** A user can provide a context, request Level 1, deliberately escalate, reload the panel, and see which levels they already opened.
+## Next pass after the hackathon
 
-## 6. Milestone M2: Feedback Workspace
-
-### Action bar
-
-Place four primary actions near the current context:
-
-- **Hint** opens/selects the hint ladder.
-- **Check my approach** sends code and/or reasoning for validation.
-- **Explain error** sends the actual verdict and error detail.
-- **Break my code** starts counterexample search only after the user opts in.
-
-### Result components
-
-Implement separate components rather than one generic AI-response area:
-
-| Component | Required content |
-| --- | --- |
-| Approach feedback | Status, reasoning, time/space complexity, constraint assessment, one next question |
-| Debug feedback | Actual result interpreted, likely cause, relevant edge case, next debugging step |
-| Counterexample | Input, expected output, actual output, minimized indicator, verification status |
-| Verification note | Clear explanation of `found`, `none_found`, `not_supported`, or `could_not_verify` |
-
-Never label an AI-only conclusion as verified. The UI must distinguish a model assessment from an executed mismatch.
-
-**Exit criteria:** Each action has loading, success, empty, unavailable, and retry states; response content remains readable at the narrow side-panel width.
-
-## 7. Milestone M4: Journal and Recommendations
-
-### Journal
-
-After an accepted result or a manual **Reflect** action, show a low-friction sheet with four prompts:
-
-1. Which approach did you use?
-2. What was your reasoning?
-3. What obstacle or mistake did you face?
-4. What will you remember next time?
-
-Persist entries in IndexedDB. Allow save, edit, skip, and return later. Do not block a learner from continuing if they skip reflection.
-
-### Recommendation card
-
-Show at most two next problems:
-
-- One prerequisite or reinforcement exercise.
-- One adjacent problem sharing the current pattern.
-
-Each item should show difficulty, patterns, and a short explanation of its relevance. A dismissed recommendation should not resurface immediately.
-
-**Exit criteria:** Journal entries survive extension restart; recommendation display gracefully handles absent catalog data.
-
-## 8. Milestone M5: LeetCode Adapter
-
-Keep all site-specific DOM code in `src/adapters/leetcode-adapter.ts`.
-
-```ts
-type AdapterResult = {
-  context: Partial<ProblemContext>;
-  confidence: "high" | "partial" | "unavailable";
-  missingFields: string[];
-};
-```
-
-Implementation sequence:
-
-1. Detect supported LeetCode problem URLs.
-2. Extract title, slug, statement, visible examples, constraints, and visible verdict.
-3. Read Monaco editor contents only when available through user-visible page state.
-4. Send normalized data to the side panel through the service worker.
-5. Display extraction confidence and retain manual edit controls.
-6. Fall back completely to paste-in when selectors fail.
-
-The adapter must never throw because a selector is absent. Do not auto-submit code, call private endpoints, or collect profile data in the MVP.
-
-## 9. Local State Model
-
-| Data | Store | Retention |
-| --- | --- | --- |
-| Active context and request state | Zustand | Current panel session |
-| Hint levels already viewed | Dexie `hintsSeen` | Per attempt |
-| Preferences and optional hint budget | Dexie `settings` | Until reset |
-| Journal entries | Dexie `journal` | Until user deletes them |
-| Recommendation dismissals | Dexie `settings` or dedicated table | Time-bounded |
-| Catalog cache | Dexie | Versioned and replaceable |
-
-Provide a local-data settings screen before public testing. It must explain what stays on device and offer a confirmed `Delete all local data` action.
-
-## 10. Testing and Acceptance
-
-- Component-test hint escalation, Level 4 confirmation, loading, retry, and unavailable states.
-- Test the API client against successful, malformed, timeout, and non-JSON responses.
-- Test Zustand and Dexie behavior for attempt resets, hint persistence, journal CRUD, and local-data deletion.
-- Test the adapter with saved HTML fixtures, never a live LeetCode page in CI.
-- Add an end-to-end smoke test: paste a Two Sum context, request a hint, validate an approach, and display a seeded counterexample.
-
-## 11. Frontend Build Order
-
-1. Extension shell, shared contracts, API client, and local database.
-2. Manual context form and side-panel layout.
-3. Hint ladder and persisted hint history.
-4. Approach/debug result cards.
-5. Counterexample result card.
-6. Journal and recommendation card.
-7. Adapter and extraction confidence UI.
-
-Complete the manual workflow before attempting DOM extraction. The product must remain useful when the target website changes.
+Once the demo flow is stable, add the next feature in this order: approach checking and debugging, the progressive hint ladder with saved history, local journal, extension side-panel integration, and finally optional LeetCode extraction. Add IndexedDB or a richer state layer only when those features need it.
