@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "first-problem",
+    "title": "First Problem",
+    "difficulty": "Easy",
+    "patterns": ["array"],
+    "prerequisites": ["second-problem"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "second-problem",
+    "title": "Second Problem",
+    "difficulty": "Easy",
+    "patterns": ["array"],
+    "prerequisites": ["first-problem"],
+    "counterexample_support": "not_supported"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {"id":"fixed-first-pair","source":"def solve(input_data):\n    return [0, 1]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"reversed-first-pair","source":"def solve(input_data):\n    return [1, 0]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"same-first-index","source":"def solve(input_data):\n    return [0, 0]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"same-second-index","source":"def solve(input_data):\n    return [1, 1]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"always-none","source":"def solve(input_data):\n    return None\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"empty-list","source":"def solve(input_data):\n    return []\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"first-and-third","source":"def solve(input_data):\n    return [0, 2]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"third-and-second","source":"def solve(input_data):\n    return [2, 1]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"same-last-index","source":"def solve(input_data):\n    return [2, 2]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"out-of-range-first","source":"def solve(input_data):\n    return [99, 0]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"returns-values","source":"def solve(input_data):\n    return input_data['nums']\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"length-as-index","source":"def solve(input_data):\n    return [len(input_data['nums']), 0]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"negative-index","source":"def solve(input_data):\n    return [0, -1]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"beyond-second-index","source":"def solve(input_data):\n    return [1, 3]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"scalar-output","source":"def solve(input_data):\n    return 0\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"string-output","source":"def solve(input_data):\n    return '0,1'\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"object-output","source":"def solve(input_data):\n    return {}\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"boolean-indices","source":"def solve(input_data):\n    return [True, False]\n","reproducible_input":{"nums":[3,3],"target":6}},
+  {"id":"computed-fixed-pair","source":"def solve(input_data):\n    return [0, 0 + 1]\n","reproducible_input":{"nums":[1,2,3],"target":6}},
+  {"id":"target-conditional","source":"def solve(input_data):\n    return [0, 0] if input_data['target'] else None\n","reproducible_input":{"nums":[1,2,3],"target":6}}
+]

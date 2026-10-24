@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "two-sum",
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "patterns": ["array", "hash-map"],
+    "prerequisites": [],
+    "related_slugs": ["contains-duplicate", "longest-substring-without-repeating-characters"],
+    "constraints": ["2 <= nums.length <= 10^4"],
+    "counterexample_support": "python"
+  },
+  {
+    "slug": "contains-duplicate",
+    "title": "Contains Duplicate",
+    "difficulty": "Easy",
+    "patterns": ["array", "hash-map"],
+    "prerequisites": [],
+    "related_slugs": ["two-sum", "valid-anagram"],
+    "constraints": ["1 <= nums.length <= 10^5"],
+    "counterexample_support": "planned"
+  },
+  {
+    "slug": "valid-anagram",
+    "title": "Valid Anagram",
+    "difficulty": "Easy",
+    "patterns": ["string", "hash-map"],
+    "prerequisites": ["contains-duplicate"],
+    "related_slugs": ["two-sum", "longest-substring-without-repeating-characters"],
+    "constraints": ["1 <= s.length, t.length <= 5 * 10^4"],
+    "counterexample_support": "planned"
+  },
+  {
+    "slug": "valid-palindrome",
+    "title": "Valid Palindrome",
+    "difficulty": "Easy",
+    "patterns": ["string", "two-pointers"],
+    "prerequisites": [],
+    "related_slugs": ["best-time-to-buy-and-sell-stock"],
+    "constraints": ["1 <= s.length <= 2 * 10^5"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "Easy",
+    "patterns": ["array", "sliding-window"],
+    "prerequisites": ["two-sum"],
+    "related_slugs": ["valid-palindrome", "longest-substring-without-repeating-characters"],
+    "constraints": ["1 <= prices.length <= 10^5"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "longest-substring-without-repeating-characters",
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "Medium",
+    "patterns": ["string", "hash-map", "sliding-window"],
+    "prerequisites": ["contains-duplicate", "best-time-to-buy-and-sell-stock"],
+    "related_slugs": ["two-sum", "valid-anagram"],
+    "constraints": ["0 <= s.length <= 5 * 10^4"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "binary-search",
+    "title": "Binary Search",
+    "difficulty": "Easy",
+    "patterns": ["array", "binary-search"],
+    "prerequisites": [],
+    "related_slugs": ["two-sum"],
+    "constraints": ["1 <= nums.length <= 10^4"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "valid-parentheses",
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "patterns": ["string", "stack"],
+    "prerequisites": [],
+    "related_slugs": ["valid-palindrome"],
+    "constraints": ["1 <= s.length <= 10^4"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "maximum-depth-of-binary-tree",
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "Easy",
+    "patterns": ["tree", "depth-first-search", "breadth-first-search"],
+    "prerequisites": [],
+    "related_slugs": ["number-of-islands"],
+    "constraints": ["The number of nodes is in the range [0, 10^4]."],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "number-of-islands",
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "patterns": ["graph", "depth-first-search", "breadth-first-search"],
+    "prerequisites": ["maximum-depth-of-binary-tree"],
+    "related_slugs": ["maximum-depth-of-binary-tree"],
+    "constraints": ["1 <= m, n <= 300"],
+    "counterexample_support": "not_supported"
+  },
+  {
+    "slug": "house-robber",
+    "title": "House Robber",
+    "difficulty": "Medium",
+    "patterns": ["array", "dynamic-programming"],
+    "prerequisites": ["best-time-to-buy-and-sell-stock"],
+    "related_slugs": ["two-sum"],
+    "constraints": ["1 <= nums.length <= 100"],
+    "counterexample_support": "not_supported"
+  }
+]

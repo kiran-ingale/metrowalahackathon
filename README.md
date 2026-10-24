@@ -161,7 +161,7 @@ flowchart LR
 | Piece | Choice | Why |
 |---|---|---|
 | Framework | **FastAPI (Python)** | Async, typed with Pydantic, and the sandbox runs Python natively. |
-| LLM | **Claude API** behind the backend, with a separate prompt per mode | Keeps the key off the client. Structured outputs for hints and diagnoses. |
+| LLM | **OpenAI API** behind the backend, with a separate prompt per mode | Keeps the key off the client. Structured outputs for hints and diagnoses. |
 | Prompting | Per-mode system prompts, JSON schema outputs | Hint, validate, debug, recommend and review each have a different contract. |
 | DB | **SQLite** for the MVP, **Postgres** later | Zero setup now, easy migration. |
 | Retrieval | **sentence-transformers** with `sqlite-vec` (pgvector later) | Surface similar past journal entries. |
