@@ -1,0 +1,6 @@
+{
+  "slug": "jump_game",
+  "counterexample_args": [[0, 0, 5, 0]],
+  "wrong_code": "class Solution:\n    def canJump(self, nums):\n        target = len(nums) - 1\n        # It forgets to check whether the index itself is reachable.\n        return any(index + jump >= target for index, jump in enumerate(nums[:-1]))\n",
+  "correct_code": "class Solution:\n    def canJump(self, nums):\n        farthest = 0\n        for index, jump in enumerate(nums):\n            if index > farthest:\n                return False\n            farthest = max(farthest, index + jump)\n            if farthest >= len(nums) - 1:\n                return True\n        return True\n"
+}

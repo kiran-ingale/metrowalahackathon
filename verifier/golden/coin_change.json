@@ -1,0 +1,6 @@
+{
+  "slug": "coin_change",
+  "counterexample_args": [[1, 3, 4], 6],
+  "wrong_code": "class Solution:\n    def coinChange(self, coins, amount):\n        count = 0\n        for coin in sorted(coins, reverse=True):\n            count += amount // coin\n            amount %= coin\n        return count if amount == 0 else -1\n",
+  "correct_code": "class Solution:\n    def coinChange(self, coins, amount):\n        best = [0] + [amount + 1] * amount\n        for total in range(1, amount + 1):\n            best[total] = min((best[total - coin] + 1 for coin in coins if coin <= total), default=amount + 1)\n        return -1 if best[amount] > amount else best[amount]\n"
+}
