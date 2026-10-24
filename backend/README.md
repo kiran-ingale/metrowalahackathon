@@ -66,6 +66,13 @@ requires a Python `solve(input_data)` function and explicit `confirm_execution: 
 | `POST` | `/v1/guidance/debug` | Explain a supplied verdict or error message |
 | `POST` | `/v1/counterexamples/find` | Opt-in verified search for supported Python problems |
 
+`backend/` is the only public HTTP API. `verifier/` contains internal execution,
+comparison, shrinking, and adapter utilities; it does not expose a separate server
+or route. The old verifier endpoint returned a canned coin-change example without
+running submitted code, so it was removed. A `found` response from the backend is
+only returned after the minimized mismatch is executed again against the candidate
+and trusted oracle.
+
 The initial catalog is local-only and validates at application startup. For example,
 `/v1/problems/two-sum` returns its patterns, prerequisites, related problems, and
 constraints without exposing internal counterexample implementation details.

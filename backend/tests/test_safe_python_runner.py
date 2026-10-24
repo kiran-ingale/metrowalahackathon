@@ -3,7 +3,8 @@ from app.services.counterexamples.runner import MAX_STDIO_BYTES, SafePythonRunne
 
 
 def run_candidate(source: str, input_data: object = [1, 2, 3]):
-    return SafePythonRunner(timeout_seconds=0.2).run(
+    # Leave enough time for a fresh child interpreter to start on Windows CI.
+    return SafePythonRunner(timeout_seconds=1.5).run(
         ExecutionRequest(source=source, input_data=input_data)
     )
 

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf6ef" />
+    <title>Unstuck — a coding companion</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="Unstuck home">
+          <span class="brand-mark" aria-hidden="true">u<span>·</span></span>
+          <span>unstuck</span>
+        </a>
+        <span class="top-note"><span class="status-dot"></span> a little help, right on time</span>
+      </header>
+
+      <main id="home">
+        <section class="welcome" aria-labelledby="welcome-title">
+          <div class="welcome-copy">
+            <span class="eyebrow"><span aria-hidden="true">✿</span> YOUR GENTLE CODING COMPANION</span>
+            <h1 id="welcome-title">Let’s untangle<br /><span>this together.</span></h1>
+            <p>Every tricky problem has a first small step.<br class="desktop-break" /> Tell us what you’re working on and we’ll find it.</p>
+          </div>
+          <div class="welcome-art" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="leaf leaf-one">✦</div>
+            <div class="leaf leaf-two">✿</div>
+            <div class="mug"><span class="mug-steam">〰</span><span class="mug-heart">♥</span></div>
+            <div class="art-caption">one step at a time</div>
+          </div>
+        </section>
+
+        <form class="workspace" id="problem-form" aria-label="Problem workspace" novalidate>
+          <div class="workspace-heading">
+            <div>
+              <span class="step-label"><span class="step-number">01</span> LET’S START HERE</span>
+              <h2>Your problem space</h2>
+            </div>
+            <span class="save-note"><span aria-hidden="true">⌁</span> only sent when you ask</span>
+          </div>
+
+          <div class="form-grid">
+            <label class="field field-title" for="problem-title">
+              <span>What are you solving? <span class="required-mark">*</span></span>
+              <input id="problem-title" name="title" type="text" placeholder="e.g. Two Sum" autocomplete="off" required aria-describedby="title-error" />
+              <span class="field-error" id="title-error"></span>
+            </label>
+            <label class="field field-statement" for="problem-statement">
+              <span>Tell us about the problem <span class="required-mark">*</span></span>
+              <textarea id="problem-statement" name="statement" rows="4" placeholder="Paste the problem statement here…" required aria-describedby="statement-error"></textarea>
+              <span class="field-error" id="statement-error"></span>
+            </label>
+          </div>
+
+          <details class="optional-details">
+            <summary class="optional-toggle"><span class="plus">＋</span> Add my approach or code</summary>
+            <div class="optional-fields">
+              <label class="field" for="approach">
+                <span>Your current approach <span class="optional-label">OPTIONAL</span></span>
+                <textarea id="approach" name="approach" rows="3" placeholder="What have you tried so far?"></textarea>
+              </label>
+              <label class="field" for="code">
+                <span>Your code <span class="optional-label">OPTIONAL</span></span>
+                <textarea id="code" name="code" rows="5" placeholder="Paste your code if you’d like…" spellcheck="false"></textarea>
+              </label>
+            </div>
+          </details>
+
+          <div class="action-row">
+            <p><span class="sparkle" aria-hidden="true">✧</span> Start with a small nudge. You’re in control.</p>
+            <button class="hint-button" type="submit"><span class="hint-label">Get a hint</span> <span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+
+        <section class="response-card" id="hint-result" aria-label="Hint response" aria-live="polite" aria-busy="false" hidden>
+          <div class="response-topline">
+            <span class="demo-badge" id="response-badge" hidden><span aria-hidden="true">✧</span> DEMO RESPONSE</span>
+            <span class="demo-note" id="response-note">Waiting for a problem</span>
+          </div>
+          <h2 id="hint-heading">A gentle nudge</h2>
+          <div class="hint-loading" id="hint-loading" role="status" hidden>
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span id="loading-copy">Finding your first small step…</span>
+          </div>
+          <div id="hint-answer" hidden>
+            <p class="hint-copy" id="hint-copy"></p>
+            <p class="demo-disclaimer" id="demo-disclaimer" hidden>This generic sample is for the demo and is not based on your specific problem.</p>
+          </div>
+          <p class="hint-question" id="hint-question" hidden></p>
+          <div class="hint-controls">
+            <button class="retry-button" id="retry-hint" type="button" hidden>Try this level again <span aria-hidden="true">↻</span></button>
+            <button class="next-hint-button" id="next-hint" type="button" hidden>Ask for the next hint <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <footer class="page-footer"><span>Made for the moments you feel a little stuck.</span><span class="footer-flower" aria-hidden="true">✿</span></footer>
+      </main>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

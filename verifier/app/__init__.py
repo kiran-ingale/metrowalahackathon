@@ -1,1 +1,1 @@
-"""FastAPI application for the verifier service."""
+"""Internal execution and counterexample utilities used by the backend."""

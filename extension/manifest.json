@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Unstuck — Coding Companion",
+  "version": "0.1.0",
+  "description": "Small, user-controlled hints for the problem you are solving.",
+  "minimum_chrome_version": "114",
+  "permissions": ["sidePanel"],
+  "host_permissions": ["http://127.0.0.1:8000/*"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_title": "Open Unstuck"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  }
+}

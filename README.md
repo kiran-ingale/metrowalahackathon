@@ -270,18 +270,32 @@ Not "problems solved." Measure independence.
 2. **Teach me:** debugging explanations, prerequisite-based practice.
 3. **Help me remember:** journal, spaced revisit, pattern recognition.
 
-## Getting started (dev)
+## Getting started (Chrome extension demo)
 
-```bash
-# backend
-cd backend && python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+The current Manifest V3 demo opens in Chrome's side panel. It supports paste-in
+problem context and progressive hints. It does not yet read LeetCode pages or include
+approach checks, debugging, a journal, or the counterexample interface.
 
-# extension
-cd extension && npm install && npm run dev
-# then load the dist/ folder via chrome://extensions (Developer mode)
-```
+1. Configure `backend/.env` with `OPENAI_API_KEY` and `OPENAI_MODEL` (`gpt-4.1-mini` is
+   the selected demo model). Keep the key in the backend only.
+2. In one PowerShell window, start the API:
+
+   ```powershell
+   cd backend
+   .\.venv\Scripts\Activate.ps1
+   uvicorn app.main:app --host 127.0.0.1 --port 8000
+   ```
+
+3. In Chrome, open `chrome://extensions`, turn on **Developer mode**, choose **Load
+   unpacked**, and select this repository's `extension/` folder. Click the Unstuck
+   toolbar icon to open the side panel.
+
+4. Paste a problem title and statement into the side panel. The extension sends a hint
+   request to the local backend only when you click **Get a hint**. If the API is
+   unavailable, it clearly labels its generic sample response as a demo.
+
+Create the backend environment if needed with `python -m venv .venv`, activate it,
+then install `pip install -r requirements.txt` from `backend/`.
 
 ## License
 

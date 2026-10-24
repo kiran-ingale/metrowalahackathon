@@ -39,7 +39,7 @@
               <span class="step-label"><span class="step-number">01</span> LET’S START HERE</span>
               <h2>Your problem space</h2>
             </div>
-            <span class="save-note"><span aria-hidden="true">⌁</span> just for this session</span>
+            <span class="save-note"><span aria-hidden="true">⌁</span> only sent when you ask</span>
           </div>
 
           <div class="form-grid">
@@ -77,19 +77,23 @@
 
         <section class="response-card" id="hint-result" aria-label="Hint response" aria-live="polite" aria-busy="false" hidden>
           <div class="response-topline">
-            <span class="demo-badge"><span aria-hidden="true">✧</span> DEMO RESPONSE</span>
-            <span class="demo-note">Sample only · no backend connected</span>
+            <span class="demo-badge" id="response-badge" hidden><span aria-hidden="true">✧</span> DEMO RESPONSE</span>
+            <span class="demo-note" id="response-note">Waiting for a problem</span>
           </div>
           <h2 id="hint-heading">A gentle nudge</h2>
           <div class="hint-loading" id="hint-loading" role="status" hidden>
             <span class="loading-spinner" aria-hidden="true"></span>
-            <span>Preparing a little demo nudge…</span>
+            <span id="loading-copy">Finding your first small step…</span>
           </div>
           <div id="hint-answer" hidden>
-            <p class="hint-copy">Before coding, work through the smallest example by hand. Write down what the input gives you and exactly what the answer needs to return.</p>
-            <p class="demo-disclaimer">This generic sample is for the demo and is not based on your specific problem.</p>
+            <p class="hint-copy" id="hint-copy"></p>
+            <p class="demo-disclaimer" id="demo-disclaimer" hidden>This generic sample is for the demo and is not based on your specific problem.</p>
           </div>
-          <button class="retry-button" id="retry-hint" type="button" disabled>Try demo again <span aria-hidden="true">↻</span></button>
+          <p class="hint-question" id="hint-question" hidden></p>
+          <div class="hint-controls">
+            <button class="retry-button" id="retry-hint" type="button" hidden>Try this level again <span aria-hidden="true">↻</span></button>
+            <button class="next-hint-button" id="next-hint" type="button" hidden>Ask for the next hint <span aria-hidden="true">→</span></button>
+          </div>
         </section>
 
         <footer class="page-footer"><span>Made for the moments you feel a little stuck.</span><span class="footer-flower" aria-hidden="true">✿</span></footer>
